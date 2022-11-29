@@ -87,14 +87,25 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "eb1a5355210e407cbc8f3862f0ccdd44"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+
   <script>
     let form = document.querySelector('form');
+    let output = document.querySelector('output');
+    let firstNumField = document.querySelector('#first-num');
+    let secondNumField = document.querySelector('#second-num');
+    let operatorField = document.querySelector('#operator');
     form.addEventListener('submit', e => {
       e.preventDefault();
-      let output = document.querySelector('output');
-      let firstNum = document.querySelector('#first-num').value;
-      let secondNum = document.querySelector('#second-num').value;
-      let operator = document.querySelector('#operator').value;
+      let firstNum = firstNumField.value;
+      let secondNum = secondNumField.value;
+      let operator = operatorField.value;
       output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
     });
 
@@ -102,6 +113,78 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+    let groupLabel = "a";
+    let timeLabel = "b";
+    errorBtns[0].addEventListener('click', e => {
+      console.log(output.innerHTML);
+    });
+    errorBtns[1].addEventListener('click', e => {
+      console.error(output.innerHTML);
+    });
+    errorBtns[2].addEventListener('click', e => {
+      console.count();
+    });
+    errorBtns[3].addEventListener('click', e => {
+      console.warn(output.innerHTML);
+    });
+    errorBtns[4].addEventListener('click', e => {
+      console.assert(parseInt(output.innerHTML), `${parseInt(output.innerHTML)} not true`);
+    });
+    errorBtns[5].addEventListener('click', e => {
+      console.clear();
+    });
+    errorBtns[6].addEventListener('click', e => {
+      console.dir(output.innerHTML);
+    });
+    errorBtns[7].addEventListener('click', e => {
+      console.dirxml(output.innerHTML);
+    });
+    errorBtns[8].addEventListener('click', e => {
+      console.group(groupLabel);
+    });
+    errorBtns[9].addEventListener('click', e => {
+      console.groupEnd(groupLabel);
+    });
+    errorBtns[10].addEventListener('click', e => {
+      console.table([output.innerHTML]);
+    });
+    errorBtns[11].addEventListener('click', e => {
+      console.time(timeLabel);
+    });
+    errorBtns[12].addEventListener('click', e => {
+      console.timeEnd(timeLabel);
+    });
+    errorBtns[13].addEventListener('click', e => {
+      console.trace();
+    });
+    errorBtns[14].addEventListener('click', e => {
+      console.log(boom);
+    });
+    class CustomError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = "CustomError";
+      }
+    }
+    try {
+      console.log(a);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      console.log("a");
+    }
+    try {
+      throw new CustomError("custom");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      console.log("a");
+    }
+
+    TrackJS.track('Testing TrackJS!');
+    window.onerror = function(errorMsg, url, lineNumber) {
+      console.log(errorMsg);
+    }
   </script>
 </body>
 
